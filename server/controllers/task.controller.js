@@ -1,7 +1,7 @@
 const Task = require('../models/task.model');
 
 exports.apiIndex = (req, res) => {
-    res.send('This is the API index');
+    res.redirect('/api/tasks');
 };
 
 exports.taskList = (req, res, next) =>
@@ -30,8 +30,7 @@ exports.taskDetail = (req, res, next) => {
 exports.taskCreate = (req, res, next) => {
     let task = new Task(req.body);
     task.save().then(task => {
-        res.status(200).json({'Task': 'Added Successfully!'})
-        res.redirect('/tasks');
+        res.status(200).json({'Task': 'Added Successfully!'});
     })
     .catch(err => {
         res.status(400).send('Failed to add new task!')
@@ -49,5 +48,13 @@ exports.taskDelete = (req, res) => {
 };
 
 exports.taskUpdate = (req, res) => {
-    res.send('Update a Task!');
-};
+    Task.updateOne({_id: req.params.id}, req.body, (err, result) => {
+        if (err) {
+            console.log(req.body);
+            res.status(404).json({error: err});
+        } else {
+            console.log(req.body);
+            res.status(201).json({message: 'Operation Completed Successfully'});
+        }
+    });
+}

@@ -1,0 +1,14 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.flexLink {
+  flex: 1 1 auto;
+}
+
+.navLink {
+  padding: 5px;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
